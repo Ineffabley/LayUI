@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>页面元素</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+
+<!-- 你的HTML代码 -->
+
+<script src="layui/layui.js"></script>
+<script>
+    //一般直接写在一个js文件中
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+
+        layer.msg('Hello World');
+    });
+</script>
+
+<!--图标  先要加一个 layui-icon 然后咋文档里找到具体的类名-->
+<p class="layui-icon layui-icon-ok-circle"></p>
+
+<!--动画  一直转loop-->
+<p class="layui-anim layui-anim-rotate layui-anim-loop"  style="width:100px;height:100px;background-color:pink;border-radius:50%">zz</p>
+
+<!--按钮+图标-->
+<button class="layui-btn layui-btn-warm">喜欢</button>
+
+<!--带图标的按钮组-->
+<div class="layui-btn-group">
+    <button type="button" class="layui-btn">  <i class="layui-icon">&#xe608;</i>增加</button>
+    <button type="button" class="layui-btn">  <i class="layui-icon">&#xe642;</i>编辑</button>
+    <button type="button" class="layui-btn">  <i class="layui-icon">&#xe640;</i>删除</button>
+</div>
+<!--表单-->
+
+</body>
+</html>

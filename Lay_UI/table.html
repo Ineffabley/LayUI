@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>表格</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.js"></script>
+
+</head>
+<body>
+<!--按钮组  自定义工具栏-->
+<!--批量删除是表头参数-->
+
+<div id="toolBar"  style="display: none">
+    <div class="layui-btn-group">
+        <button type="button" class="layui-btn" lay-event="add" data-type="getCheckData">  <i class="layui-icon">&#xe608;</i>增加</button>
+        <button type="button" class="layui-btn" lay-event="update">  <i class="layui-icon">&#xe642;</i>编辑</button>
+        <button type="button" class="layui-btn layui-btn-danger" lay-event="delete">  <i class="layui-icon">&#xe640;</i>批量删除</button>
+    </div>
+<!--    需要监听事件    这是每一行的按钮 -->
+    <div type="text/html" id="barDemo" style="display: none">
+        <a class="layui-btn layui-btn-xs" lay-event="edit"  lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </div>
+</div>
+<!--绘制表格   加上layfilter进行事件监听 -->
+<table id="demo" style="display: none"  lay-filter="test"></table>
+
+<!--引入模块-->
+<!--将原生table标签绑定layui-->
+<!--分页是基础参数  控制全局-->
+<!--表头参数---行,列-->
+<script>
+    layui.use("table",function () {
+        var table=layui.table;
+        table.render(
+            {
+                //绑定容器
+                elem:"#demo",
+                url:'json/user.json'
+                ,cols: [[ //表头    二维数组[[]]    k,v   field  title   json数据
+                    {type:'checkbox'},
+                    {field: 'id', title: 'ID', width:80, }
+                    ,{field: 'username', title: '用户名', width:80}
+                    ,{field: 'sex', title: '性别', width:80, sort: true}
+                    ,{field: 'city', title: '城市', width:80}
+                    ,{field: 'sign', title: '签名', width: 177}
+                    ,{field: 'experience', title: '积分', width: 80, sort: true}
+                    ,{field: 'score', title: '评分', width: 80, sort: true}
+                    ,{field: 'classify', title: '职业', width: 80}
+                    ,{field: 'wealth', title: '财富', width: 135, sort: true}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+
+                ]],
+                page:true,
+                //工具栏
+                toolbar:"#toolBar",
+            });
+
+        //监听头部工具栏的点击  table.toolbar  参数是toolbar   lay-filter的属性
+        table.on('toolbar(test)',function (obj) {
+       switch(obj.event)
+       {
+           case 'add':
+              // alert("添加");
+               add();
+               break;
+           case 'update':
+               alert("编辑");
+               break;
+           case 'delete':
+              // alert("删除");
+               break;
+
+       }
+        });
+
+//监听每一行的点击事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+           if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            }
+        });
+
+
+    });
+
+    function add()
+    {
+        alert("添加");
+    }
+
+</script>
+
+</body>
+</html>
